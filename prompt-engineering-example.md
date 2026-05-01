@@ -7,13 +7,13 @@ Hey team,
 
 Over the last few months, I've noticed we spend a lot of time wrestling with AI to get the outputs we actually need. The issue usually isn't the model; it's the prompt. When we are working in real-time, whether we are drafting an email to a stakeholder or debugging a broken Kubernetes cluster, we need precision. 
 
-Below is a curated repository of 10 "Strong" prompts I use in my daily workflow. I’ve broken this down into **General Business (30%)** and **Cloud & DevOps (70%)**. 
+Below is a curated repository of 10 "Strong" prompts that can be used in daily workflow. I’ve broken this down into **General Business** and **Cloud & DevOps**. 
 
 Feel free to copy, paste, and adapt these to your specific context. 
 
 ---
 
-## 🏢 Part 1: General Business & Operations (30%)
+## 🏢 Part 1: General Business & Operations 
 *These prompts are designed for non-technical workflows: communication, strategy, and content creation. Notice how we establish the Persona, Tone, and Format upfront.*
 
 ### 1. The "Difficult Communication" Helper
@@ -41,7 +41,7 @@ Feel free to copy, paste, and adapt these to your specific context.
 
 ---
 
-## ☁️ Part 2: Cloud Engineering & DevOps (70%)
+## ☁️ Part 2: Cloud Engineering & DevOps
 *This is where we get highly technical. Notice the use of "Chain of Thought" (asking the AI to explain its reasoning) and strict formatting constraints (like specifying JSON or YAML).*
 
 ### 4. Infrastructure as Code (Terraform) Generation
