@@ -3,9 +3,11 @@ from vertexai import agent_engines
 from vertexai.preview import reasoning_engines
 
 # --- 1. CONFIGURATION ---
-PROJECT_ID = "yourgcpprojectname"
+# Redacted: Use your specific Google Cloud Project ID and Region
+PROJECT_ID = "YOUR_PROJECT_ID"
 LOCATION = "us-central1"
-STAGING_BUCKET = "<gs://gcp-bucketname>"
+# Redacted: Ensure this bucket exists in your project
+STAGING_BUCKET = "gs://YOUR_BUCKET_NAME"
 
 # Initialize Vertex AI with your project and staging bucket
 vertexai.init(

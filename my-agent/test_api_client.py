@@ -12,8 +12,9 @@ def query_agent():
         print(f"Authentication Error: {e}")
         return
 
-    # 2. Your specific Agent URL
-    url = "https://us-central1-aiplatform.googleapis.com/v1/projects/<gcp-project-id>/locations/us-central1/reasoningEngines/<agent-id>:query"
+    # 2. Your specific Agent URL (Placeholders used for security)
+    # Replace <PROJECT_ID> and <AGENT_ID> with your actual values
+    url = "https://us-central1-aiplatform.googleapis.com/v1/projects/<PROJECT_ID>/locations/us-central1/reasoningEngines/<AGENT_ID>:query"
 
     # 3. Prepare Payload
     # The REST API requires 'input' to be a Struct (dictionary)
@@ -31,7 +32,7 @@ def query_agent():
     }
 
     # 4. Execute the Request
-    print(f"Connecting to Agent Registry at: {url}\n")
+    print(f"Connecting to Agent Registry...")
     
     try:
         response = requests.post(url, json=data, headers=headers)
