@@ -1,0 +1,2 @@
+This works global exchange rates for all currency
+
