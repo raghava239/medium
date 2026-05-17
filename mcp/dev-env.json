@@ -1,0 +1,50 @@
+### Environment Configuration Example (`dev-env.json`)
+
+```json
+{
+  "mcp_server_ruleset": {
+    "context_name": "[REDACTED_CONTEXT_NAME]",
+    "enforced_environment": "Dev",
+    "global_labels": {
+      "env": "Dev"
+    },
+    "constraints": {
+      "ip_allocation": {
+        "allowed_rfc_range": "RFC 1918 Class A only (10.0.0.0/8)",
+        "forbidden_ranges": ["172.16.0.0/12", "192.168.0.0/16"],
+        "default_subnets": [
+          {
+            "purpose": "Primary Compute/Application",
+            "cidr": "10.10.0.0/24"
+          },
+          {
+            "purpose": "Regional Managed Proxy-Only Subnet",
+            "cidr": "10.129.0.0/23"
+          }
+        ]
+      },
+      "compliance_firewalls": [
+        {
+          "rule_id": "REQ-FW-01",
+          "description": "Cloud Health Check Ingress Requirements",
+          "mandatory_source_ranges": ["130.211.0.0/22", "35.191.0.0/16"],
+          "action": "ALLOW",
+          "protocols": ["tcp:80", "tcp:443"]
+        },
+        {
+          "rule_id": "REQ-FW-02",
+          "description": "Global Public External Load Balancer Frontend Access",
+          "source_ranges": ["0.0.0.0/0"],
+          "action": "ALLOW",
+          "target_tags": ["load-balancer-frontend"],
+          "protocols": ["tcp:80", "tcp:443"]
+        }
+      ],
+      "resource_governance": {
+        "output_directory": "./[REDACTED_DIR]",
+        "allowed_os_images": ["debian-cloud/*"],
+        "ssl_requirement": "Managed SSL certificate required for HTTPS proxies"
+      }
+    }
+  }
+}
