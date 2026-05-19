@@ -1,4 +1,3 @@
-
 Building and Testing LLM Agents: A Practical Guide to the Model Context Protocol (MCP)
 Author: Raghu Pothula — AI and Cloud Specialist
 
@@ -7,6 +6,8 @@ Large Language Models (LLMs) are incredibly smart, but they are traditionally is
 Enter the Model Context Protocol (MCP). MCP acts as an open-standard bridge allowing LLMs to securely interact with external data sources and tools.
 
 In this guide, we will look at the real-world implementation experience of building an autonomous AI Hotel Agent. We will cover setting up a relational database, configuring an MCP gateway server, wrapping the agent using an Agent Development Kit (ADK), and testing everything locally before pushing it to production.
+
+📘 Note: This tutorial follows the baseline design standards outlined in the official Travel Agent with MCP Toolbox and ADK Codelab. For a deeper dive into the underlying platform concepts, feel free to follow along with the official documentation as well.
 
 🏗️ Technical Architecture Overview
 To completely decouple the application logic and maximize flexibility, our system architecture follows a distinct separation of concerns:
@@ -17,11 +18,15 @@ The MCP Server Engine: A central configuration layer that securely translates da
 
 The Agent App Execution Layer: An abstract runtime environment using an Agent Development Kit (ADK) to process user prompts and orchestrate functional execution.
 
+To keep our deployment environment clean and production-ready, we separate our architecture configuration files (tools.yaml) and environmental setup logs into a dedicated External Configuration Git Repository.
+
 🛠️ Step 1: Provisioning the Environment
 Before diving into configuration, prepare your runtime virtual machine (VM) with the required execution runtimes and package tooling.
 
+For quick access to a complete list of installation utilities used during this phase, you can reference our version-controlled Installation Commands Script on GitHub.
+
 Initializing System Dependencies
-Ensure you have Node.js/NPX and the appropriate client runtime utilities initialized on your development VM
+Ensure you have Node.js/NPX and the appropriate client runtime utilities initialized on your development VM:
 
 Bash
 # Update local package definitions
@@ -48,7 +53,7 @@ CREATE TABLE hotels(
  checkout_date  DATE    NOT NULL,
  booked         BIT     NOT NULL
 );
-Seeding Seed Dataset
+Seeding the Dataset
 Populate the structural tables with test listings across varying regions:
 
 SQL
@@ -64,7 +69,6 @@ VALUES
  (8, 'Holiday Inn Basel', 'Basel', 'Upper Midscale', '2024-04-09', '2024-04-24', B'0'),
  (9, 'Courtyard Zurich', 'Zurich', 'Upscale', '2024-04-03', '2024-04-13', B'0'),
  (10, 'Comfort Inn Bern', 'Bern', 'Midscale', '2024-04-04', '2024-04-16', B'0');
-
 ⚙️ Step 3: Architecting the MCP Gateway
 Instead of exposing our database directly to an LLM, we use an MCP Toolbox Server. This component reads an explicit definition layout file (tools.yaml) and securely packages parameterized queries as discoverable APIs for our core AI agent.
 
@@ -82,7 +86,9 @@ chmod +x toolbox
 # Validate binary integrity
 ./toolbox -v
 Exposing Secure Queries via tools.yaml
-Create a structure map named tools.yaml using your system editor (nano tools.yaml). This mapping instructs the MCP server on how to authenticate against data sources and structure natural-language tool parameters:
+The primary map configuration is managed centrally. You can view, fork, or modify the layout mapping directly via our public tools.yaml on GitHub.
+
+Create a file named tools.yaml in your local directory matching that manifest structure:
 
 YAML
 kind: source
@@ -254,7 +260,6 @@ adk deploy cloud_run \
   --with_ui \
   $AGENT_PATH
 📈 Verification and Scale Checks
-
 To verify your production application, use the live web dashboard URL provided at the end of the deployment script.
 
 To ensure your environment handles data changes correctly, run a database update to see how quickly the agent adapts:
@@ -262,5 +267,4 @@ To ensure your environment handles data changes correctly, run a database update
 SQL
 INSERT INTO hotels(id, name, location, price_tier, checkin_date, checkout_date, booked)
 VALUES (11, 'Taj Falaknuma Palace', 'Hyderabad', 'Luxury', '2026-06-01', '2026-06-05', B'0');
-Query the agent again about new regions like Hyderabad. Because MCP reads directly from the data source, the agent will instantly return the updated database records—with no training or fine-tuning required
-
+Query the agent again about new regions like Hyderabad. Because MCP reads directly from the data source, the agent will instantly return the updated database records—with no training or fine-tuning required.
